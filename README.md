@@ -1,2 +1,2 @@
 # Freeplay
-Freeplay, the open source (nearly) infinite whiteboard. A place to draw, plan, write and create.
+Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, plan, write and create.
