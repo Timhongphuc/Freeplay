@@ -115,6 +115,28 @@ struct ContentView: View {
                 )
                 // .background(background)
 
+                    .dropDestination(for: String.self) { droppedShapes, location in //I moved it into the Canvas because
+
+                        guard let typeString = droppedShapes.first else { return false }
+
+                        let newShape: Shape
+
+                        if typeString == "circle" {
+                            newShape = Shape(position: location, type: ShapeType.circle) //Is there a possibility for CGPoint?
+                        } else if typeString == "ellipse" {
+                            newShape = Shape(position: location, type: ShapeType.ellipse)
+                        } else if typeString == "rectangle" {
+                            newShape = Shape(position: location, type: ShapeType.rectangle)
+                        } else if typeString == "rounded rectangle" {
+                            newShape = Shape(position: location, type: ShapeType.roundedRectangle)
+                        } else {
+                            return false
+                        }
+
+                        self.shapes.append(newShape)
+                        return true
+                    } //End DropDestination
+
                 ForEach($shapes) { $shape in //Construction plan for every shape (If it works lol).
                     switch shape.type {
                     case .rectangle:
@@ -537,30 +559,10 @@ struct ContentView: View {
 
                                 } .frame(width: 300, height: 300)
                             }
-                    }
+                    } //Toolbar element (item) shapes collection preview ending...
 
                 }.frame(width: 10000, height: 10000) //.toolbar ending bracet
 
-            } .dropDestination(for: String.self) { droppedShapes, location in
-
-                guard let typeString = droppedShapes.first else { return false }
-
-                let newShape: Shape
-
-                if typeString == "circle" {
-                    newShape = Shape(position: location, type: ShapeType.circle) //Is there a possibility for CGPoint?
-                } else if typeString == "ellipse" {
-                    newShape = Shape(position: location, type: ShapeType.ellipse)
-                } else if typeString == "rectangle" {
-                    newShape = Shape(position: location, type: ShapeType.rectangle)
-                } else if typeString == "rounded rectangle" {
-                    newShape = Shape(position: location, type: ShapeType.roundedRectangle)
-                } else {
-                    return false
-                }
-
-                self.shapes.append(newShape)
-                return true
             }
 
         }
