@@ -162,7 +162,7 @@ struct ContentView: View {
                     case .ellipse:
                         Ellipse()
                             .fill(shape.color)
-                            .frame(width: shape.size.width + 70, height: shape.size.height)
+                            .frame(width: shape.size.width + 100, height: shape.size.height)
                             .position(shape.position)
                             .gesture(DragGesture()
                                 .onChanged { value in
@@ -539,10 +539,10 @@ struct ContentView: View {
                                             .padding(20)
                                             .scaledToFit()
                                             .draggable("circle")
-                                        Ellipse()
+                                        Ellipse() //Have to fix padding and alignmnt of preview shapes...
                                             .padding(.top, 50)
-                                            .padding(.bottom, 50)
-                                            .padding(.horizontal, 20)
+                                            .padding(.bottom, 30)
+                                            .padding(.horizontal, 30)
                                             .draggable("ellipse")
                                     } .padding(1)
 
@@ -555,6 +555,31 @@ struct ContentView: View {
                                             .padding(20)
                                             .scaledToFit()
                                             .draggable("rounded rectangle")
+                                    }
+
+                                    VStack{
+                                        HStack{
+                                            Button{
+                                                currentShape.color = .black
+                                            } label: {
+                                                Text("")
+                                                    .font(.headline)
+                                                    .fontWeight(.semibold)
+                                                    .padding(.vertical, 12)
+                                                    .padding(.horizontal, 12)
+                                                    .background(
+                                                        Circle()
+                                                            .fill(Color.black)
+                                                    )
+                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                                            }
+                                            .buttonStyle(.plain)
+                                            .overlay(
+                                                self.currentShape.color == .black ? Circle().stroke(Color.blue, lineWidth: 3)
+                                                : nil
+                                            )
+
+                                        }
                                     }
 
                                 } .frame(width: 300, height: 300)
