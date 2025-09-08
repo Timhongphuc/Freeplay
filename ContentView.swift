@@ -66,6 +66,7 @@ struct ContentView: View {
 
     @State private var amIdrawing: Bool = false
 
+    @State private var currentShapeColor: Color = .blue
     @State private var isBlacktoggled: Bool = false
     @State private var isBluetoggled: Bool = false
     @State private var isGreentoggled: Bool = false
@@ -557,30 +558,30 @@ struct ContentView: View {
                                             .draggable("rounded rectangle")
                                     }
 
-                                    VStack{
-                                        HStack{
-                                            Button{
-                                                currentShape.color = .black
-                                            } label: {
-                                                Text("")
-                                                    .font(.headline)
-                                                    .fontWeight(.semibold)
-                                                    .padding(.vertical, 12)
-                                                    .padding(.horizontal, 12)
-                                                    .background(
-                                                        Circle()
-                                                            .fill(Color.black)
-                                                    )
-                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
-                                            }
-                                            .buttonStyle(.plain)
-                                            .overlay(
-                                                self.currentShape.color == .black ? Circle().stroke(Color.blue, lineWidth: 3)
-                                                : nil
-                                            )
-
-                                        }
-                                    }
+//                                    VStack{
+//                                        HStack{
+//                                            Button{
+//                                                self.currentShape.color = .black
+//                                            } label: {
+//                                                Text("")
+//                                                    .font(.headline)
+//                                                    .fontWeight(.semibold)
+//                                                    .padding(.vertical, 12)
+//                                                    .padding(.horizontal, 12)
+//                                                    .background(
+//                                                        Circle()
+//                                                            .fill(Color.black)
+//                                                    )
+//                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+//                                            }
+//                                            .buttonStyle(.plain)
+//                                            .overlay(
+//                                                self.currentShape.color == .black ? Circle().stroke(Color.blue, lineWidth: 3)
+//                                                : nil
+//                                            )
+//
+//                                        }
+//                                    } UNDER CONSTRUCTION!
 
                                 } .frame(width: 300, height: 300)
                             }
