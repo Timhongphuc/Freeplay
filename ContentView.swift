@@ -75,8 +75,11 @@ struct ContentView: View {
     @State private var isOreangetoggled: Bool = false
     @State private var isWhitetoggled: Bool = false
 
-    @GestureState private var dragOffset: CGSize = .zero //AI helped me with this (It's a pretty specific use case I think personally... So it's hard to find the right answer for my problem via Google.)
+   // @GestureState private var dragOffset: CGSize = .zero //AI helped me with this (It's a pretty specific use case I think personally... So it's hard to find the right answer for my problem via Google.)
     @State private var draggedShapeId: UUID?
+
+    @State private var isPopover3Presented: Bool = false
+    @State private var text: String = ""
     var body: some View {
         ScrollView([.horizontal, .vertical]){
             ZStack {
@@ -206,7 +209,6 @@ struct ContentView: View {
                         } .buttonStyle(.borderless)
                     }
 
-
                     ToolbarItem(placement: .principal){
                         Button(action: {
                             isPopover1Presented.toggle()
@@ -226,6 +228,7 @@ struct ContentView: View {
                                     //   .font(.headline)
                                         .font(.system(size: 12, weight: .medium))
                                         .padding(5)
+                                       // .padding(.top, 5)
 
                                     HStack{
                                         if colorScheme == .light{
@@ -509,6 +512,7 @@ struct ContentView: View {
                                 //END
                             }
                     }
+
                     //Popover 2 beginning
 
                     //                ToolbarItem(placement: .principal) {
@@ -587,13 +591,48 @@ struct ContentView: View {
                             }
                     } //Toolbar element (item) shapes collection preview ending...
 
-                }.frame(width: 10000, height: 10000) //.toolbar ending bracet
+                    ToolbarItem(placement: .principal){
+                        Button(action: {
+                            isPopover3Presented.toggle()
+                        }) {
+                            VStack{
+                                Image(systemName: "character.cursor.ibeam")
+                                Text("Text")
+                                    .font(.callout)
+                            }
+                        }.buttonStyle(.borderless)
 
-            }
+                            .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
+                                VStack{
 
-        }
-    }
+                                    TextField("Enter your text here...", text: $text)
+                                        .padding(20)
+                                      //  .padding(.bottom, 240)
+
+//                                    RoundedRectangle(cornerRadius: 20)
+//                                        .fill(Color.white)
+//                                        .padding(20)
+
+                                    Text(text) //Fix it for Darkmode!!!
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .multilineTextAlignment(.center)
+                                        .padding()
+                                        .frame(width: 270, height: 200)
+                                        .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
+                                        .draggable("droptext")
+
+                                } .frame(width: 300, height:300)
+                        } //Popover 3 end bracket
+
+                        }
+
+            }.frame(width: 10000, height: 10000) //.toolbar ending bracet
+
+         }
+
+      }
+ }
 
 #Preview {
     ContentView()
-}
+ }
