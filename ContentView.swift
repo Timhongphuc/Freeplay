@@ -25,6 +25,12 @@ struct Shape: Identifiable {
     var type: ShapeType
 }
 
+struct droppedText: Identifiable{
+    let id = UUID()
+    var position = CGPoint(x:100 ,y:100)
+    var content: String = ""
+}
+
 enum Tools {
     case pencil
     case eraser
@@ -79,7 +85,9 @@ struct ContentView: View {
     @State private var draggedShapeId: UUID?
 
     @State private var isPopover3Presented: Bool = false
-    @State private var text: String = ""
+    @State private var textsoncanvas: String = ""
+    @State private var droppedtext: [droppedText] = []
+    
     var body: some View {
         ScrollView([.horizontal, .vertical]){
             ZStack {
@@ -185,6 +193,24 @@ struct ContentView: View {
                             )
                     }
                 }
+
+//                .dropDestination(for: String.self) { droppedStrings, location in
+//                    guard let typeString = droppedStrings.first else { return false }
+//                    
+//                    if typeString == "droptext" {
+//                        let newTextItem = droppedText(position: location) //Credits: AI
+//                        self.droppedtext.append(newTextItem)
+//                        return true
+//                    }
+//                    
+//                    return false
+//                }
+//                
+//                ForEach($droppedtext){ $droppedtext in
+//                    Text(droppedtext.content)
+//                        .position(droppedtext.position)
+//                    
+//                }
 
             } //ZStack Ending
                 .frame(minWidth: 10000, minHeight: 10000)
@@ -605,7 +631,7 @@ struct ContentView: View {
                             .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 VStack{
 
-                                    TextField("Enter your text here...", text: $text)
+                                    TextField("Enter your text here...", text: $textsoncanvas)
                                         .padding(20)
                                       //  .padding(.bottom, 240)
 
@@ -613,7 +639,7 @@ struct ContentView: View {
 //                                        .fill(Color.white)
 //                                        .padding(20)
 
-                                    Text(text) //Fix it for Darkmode!!!
+                                    Text(self.textsoncanvas) //Fix it for Darkmode!!!
                                         .fixedSize(horizontal: false, vertical: true)
                                         .multilineTextAlignment(.center)
                                         .padding()
