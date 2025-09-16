@@ -233,6 +233,7 @@ struct ContentView: View {
                             }
 
                         } .buttonStyle(.borderless)
+                            .padding(5)
                     }
 
                     ToolbarItem(placement: .principal){
@@ -245,6 +246,7 @@ struct ContentView: View {
                                     .font(.callout)
                             }
                         }              .buttonStyle(.borderless)
+                            .padding(5)
 
                             .popover(isPresented: $isPopover1Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 //Popover Draw
@@ -562,6 +564,8 @@ struct ContentView: View {
                                     .font(.callout)
                             }
                         }              .buttonStyle(.borderless)
+                                .padding(5)
+                        
                             .popover(isPresented: $isPopover2Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
 
                                 VStack {
@@ -617,41 +621,48 @@ struct ContentView: View {
                             }
                     } //Toolbar element (item) shapes collection preview ending...
 
-                    ToolbarItem(placement: .principal){
-                        Button(action: {
-                            isPopover3Presented.toggle()
-                        }) {
-                            VStack{
-                                Image(systemName: "character.cursor.ibeam")
-                                Text("Text")
-                                    .font(.callout)
-                            }
-                        }.buttonStyle(.borderless)
-
-                            .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
-                                VStack{
-
-                                    TextField("Enter your text here...", text: $textsoncanvas)
-                                        .padding(20)
-                                      //  .padding(.bottom, 240)
-
-//                                    RoundedRectangle(cornerRadius: 20)
-//                                        .fill(Color.white)
+                    
+                    
+                    
+//                    ToolbarItem(placement: .principal){
+//                        Button(action: {
+//                            isPopover3Presented.toggle()
+//                        }) {
+//                            VStack{
+//                                Image(systemName: "character.cursor.ibeam")
+//                                Text("Text")
+//                                    .font(.callout)
+//                            }
+//                        }.buttonStyle(.borderless)
+//
+//                            .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
+//                                VStack{
+//
+//                                    TextField("Enter your text here...", text: $textsoncanvas)
 //                                        .padding(20)
+//                                      //  .padding(.bottom, 240)
+//
+////                                    RoundedRectangle(cornerRadius: 20)
+////                                        .fill(Color.white)
+////                                        .padding(20)
+//
+//                                    Text(self.textsoncanvas) //Fix it for Darkmode!!!
+//                                        .fixedSize(horizontal: false, vertical: true)
+//                                        .multilineTextAlignment(.center)
+//                                        .padding()
+//                                        .frame(width: 270, height: 200)
+//                                        .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
+//                                        .draggable("droptext")
+//
+//                                } .frame(width: 300, height:300)
+//                        } //Popover 3 end bracket
+//
+//                        }
 
-                                    Text(self.textsoncanvas) //Fix it for Darkmode!!!
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .multilineTextAlignment(.center)
-                                        .padding()
-                                        .frame(width: 270, height: 200)
-                                        .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
-                                        .draggable("droptext")
-
-                                } .frame(width: 300, height:300)
-                        } //Popover 3 end bracket
-
-                        }
-
+                    
+                    
+                    
+                    
             }.frame(width: 10000, height: 10000) //.toolbar ending bracet
 
          }
