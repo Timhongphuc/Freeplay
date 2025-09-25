@@ -42,6 +42,7 @@ enum ShapeType {
     case ellipse
     case rectangle
     case roundedRectangle
+    case text //For the text feature for now. But I think I have to fix it later.
    // case triangle
 }
 
@@ -86,8 +87,7 @@ struct ContentView: View {
 
     @State private var isPopover3Presented: Bool = false
     @State private var textsoncanvas: String = ""
-    @State private var droppedtext: [droppedText] = []
-    
+
     var body: some View {
         ScrollView([.horizontal, .vertical]){
             ZStack {
@@ -141,6 +141,8 @@ struct ContentView: View {
                             newShape = Shape(position: location, type: ShapeType.rectangle)
                         } else if typeString == "rounded rectangle" {
                             newShape = Shape(position: location, type: ShapeType.roundedRectangle)
+                        } else if typeString == "droptext" {
+                            newShape = Shape(position: location, type: ShapeType.text)
                         } else {
                             return false
                         }
@@ -191,26 +193,17 @@ struct ContentView: View {
                                     shape.position = value.location
                                 }
                             )
+                    case .text: //My intention of handling the text objects like shapes was absolutely right. But why does this work? Why can't I create just another for Each or something...
+                        Text(textsoncanvas)
+                            .font(.system(size: 17, weight: .medium, design: .rounded))
+                            .position(shape.position)
+                            .gesture(DragGesture()
+                                .onChanged { value in
+                                    shape.position = value.location
+                                }
+                            )
                     }
                 }
-
-//                .dropDestination(for: String.self) { droppedStrings, location in
-//                    guard let typeString = droppedStrings.first else { return false }
-//                    
-//                    if typeString == "droptext" {
-//                        let newTextItem = droppedText(position: location) //Credits: AI
-//                        self.droppedtext.append(newTextItem)
-//                        return true
-//                    }
-//                    
-//                    return false
-//                }
-//                
-//                ForEach($droppedtext){ $droppedtext in
-//                    Text(droppedtext.content)
-//                        .position(droppedtext.position)
-//                    
-//                }
 
             } //ZStack Ending
                 .frame(minWidth: 10000, minHeight: 10000)
@@ -565,7 +558,7 @@ struct ContentView: View {
                             }
                         }              .buttonStyle(.borderless)
                                 .padding(5)
-                        
+
                             .popover(isPresented: $isPopover2Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
 
                                 VStack {
@@ -621,48 +614,47 @@ struct ContentView: View {
                             }
                     } //Toolbar element (item) shapes collection preview ending...
 
-                    
-                    
-                    
-//                    ToolbarItem(placement: .principal){
-//                        Button(action: {
-//                            isPopover3Presented.toggle()
-//                        }) {
-//                            VStack{
-//                                Image(systemName: "character.cursor.ibeam")
-//                                Text("Text")
-//                                    .font(.callout)
-//                            }
-//                        }.buttonStyle(.borderless)
-//
-//                            .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
-//                                VStack{
-//
-//                                    TextField("Enter your text here...", text: $textsoncanvas)
-//                                        .padding(20)
-//                                      //  .padding(.bottom, 240)
-//
-////                                    RoundedRectangle(cornerRadius: 20)
-////                                        .fill(Color.white)
-////                                        .padding(20)
-//
-//                                    Text(self.textsoncanvas) //Fix it for Darkmode!!!
-//                                        .fixedSize(horizontal: false, vertical: true)
-//                                        .multilineTextAlignment(.center)
-//                                        .padding()
-//                                        .frame(width: 270, height: 200)
-//                                        .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
-//                                        .draggable("droptext")
-//
-//                                } .frame(width: 300, height:300)
-//                        } //Popover 3 end bracket
-//
-//                        }
 
-                    
-                    
-                    
-                    
+
+
+                    ToolbarItem(placement: .principal){
+                        Button(action: {
+                            isPopover3Presented.toggle()
+                        }) {
+                            VStack{
+                                Image(systemName: "character.cursor.ibeam")
+                                Text("Text")
+                                    .font(.callout)
+                            }
+                        }.buttonStyle(.borderless)
+                            .padding(5)
+
+                            .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
+                                VStack{
+
+                                    TextField("Enter your text here...", text: $textsoncanvas)
+                                        .padding(20)
+                                      //  .padding(.bottom, 240)
+
+//                                    RoundedRectangle(cornerRadius: 20)
+//                                        .fill(Color.white)
+//                                        .padding(20)
+
+                                    Text(self.textsoncanvas) //Fix it for Darkmode!!!
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .multilineTextAlignment(.center)
+                                        .padding()
+                                        .frame(width: 270, height: 200)
+                                        .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
+                                        .draggable("droptext")
+
+                                } .frame(width: 300, height:300)
+                            } //Popover 3 end bracket
+
+                        }
+
+
+
             }.frame(width: 10000, height: 10000) //.toolbar ending bracet
 
          }
