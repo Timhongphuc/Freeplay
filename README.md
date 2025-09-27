@@ -15,4 +15,4 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 <img width="1244" height="773" alt="Bildschirmfoto 2025-09-27 um 12 13 35" src="https://github.com/user-attachments/assets/a68a84c1-ff2e-43a6-82c4-e79a62217486" />
 
 
-## Hopefully you can enjoy Freeplay as much as we did while building it!
+## Hopefully you can enjoy Freeplay as much as I did while building it!
