@@ -7,11 +7,16 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 ## Features
 
 - Draw in different colors and thicknesses
-- Drop shapes (New features for size and color customization are coming soon!)
+- Drop shapes
 - Add text to the canvas with drag and drop
 - Clear whiteboard feature
-  
-- (Import/Export, Drop Pictures and AI are coming soon!)
+
+## Coming soon...
+
+- Features for size and color customization
+- Import/Export feature
+- Drop Pictures onto the canvas
+- AI 
 
 ## Screenshots
 
