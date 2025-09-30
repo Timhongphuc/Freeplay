@@ -4,7 +4,14 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 
 <img width="100" height="100" alt="AppIcon1" src="https://github.com/user-attachments/assets/69bdbb1e-35d6-41a4-9d29-2e77dfdc02ad" /> 
 
-## More on this is coming soon! ...
+## Features
+
+- Draw in different colors and thicknesses
+- Drop shapes (New features for size and color customization are coming soon!)
+- Add text to the canvas with drag and drop
+- Clear whiteboard feature
+  
+- (Import/Export, Drop Pictures and AI are coming soon!)
 
 ## Screenshots
 
