@@ -24,6 +24,8 @@ struct Shape: Identifiable {
     var size: CGSize = CGSize(width: 170, height: 170)
     var type: ShapeType
     var text: String = "" // text content for .text shapes
+    //var fontSize = 0.0 (Wait a minute...)
+    var fontSize = 0.0
 }
 
 struct droppedText: Identifiable{
@@ -87,6 +89,9 @@ struct ContentView: View {
 
     @State private var isPopover3Presented: Bool = false
     @State private var textsoncanvas: String = ""
+   // @State private var fontSize: Double = 0  (Notes: Only make it a Double, if you wanna geet precision values.)
+    //@State private var fontSize = 0.0 (This is now placed in: 'Shape.fontSize')
+    @State private var fontSizeonCanvas = 0.0
 
     var body: some View {
         ScrollView([.horizontal, .vertical]){
@@ -142,7 +147,7 @@ struct ContentView: View {
                         } else if typeString == "rounded rectangle" {
                             newShape = Shape(position: location, type: ShapeType.roundedRectangle)
                         } else if typeString == "droptext" { //Text
-                            newShape = Shape(position: location, type: ShapeType.text, text: textsoncanvas) //At this part, the Code passes the Text from "textoncanvas" to the Shape.text variable inside the Shape-Struct.
+                            newShape = Shape(position: location, type: ShapeType.text, text: textsoncanvas, fontSize: fontSizeonCanvas) //At this part, the Code passes the Text from "textoncanvas" to the Shape.text variable inside the Shape-Struct.
                         } else {
                             return false
                         }
@@ -201,7 +206,7 @@ struct ContentView: View {
                             )
                     case .text: // handle text shapes with model data (Changed by Xcode-AI)
                         Text(shape.text) //Changed from "textoncanvas, to shape.text" (Changed by Xcode-AI)
-                            .font(.system(size: 17, weight: .medium, design: .rounded))
+                            .font(.system(size: shape.fontSize, weight: .medium, design: .rounded))
                             .position(shape.position)
                             .gesture(DragGesture()
                                 .onChanged { value in
@@ -646,14 +651,29 @@ struct ContentView: View {
 //                                        .fill(Color.white)
 //                                        .padding(20)
 
-                                    Text(self.textsoncanvas) //Fix it for Darkmode!!!
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .multilineTextAlignment(.center)
-                                        .padding()
-                                        .frame(width: 270, height: 200)
-                                        .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
-                                        .draggable("droptext")
-
+                                    Slider(value: $fontSizeonCanvas, in: 10.0...50.0, step: 1.0)
+                                        .padding(.horizontal, 10)
+                                    Text("Font size: \(fontSizeonCanvas)")
+                                    
+                                    if colorScheme == .light {
+                                        Text(self.textsoncanvas) //Fix it for Darkmode!!! (I will do it now. '02.10.2025, 22:05, 10:05pm')
+                                            .fixedSize(horizontal: false, vertical: true) //This feature works the best for short sentences or phrases or single words. (I have to create some kind of invisible border sometime!)
+                                            .multilineTextAlignment(.center)
+                                            .padding()
+                                            .frame(width: 270, height: 170)
+                                            .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
+                                            .draggable("droptext")
+                                    } else {
+                                        Text(self.textsoncanvas) //Fix it for Darkmode!!! (I will do it now. '02.10.2025, 22:05, 10:05pm')
+                                            .fixedSize(horizontal: false, vertical: true) //This feature works the best for short sentences or phrases or single words. (I have to create some kind of invisible border sometime!)
+                                            .multilineTextAlignment(.center)
+                                            .padding()
+                                            .frame(width: 270, height: 170)
+                                            .background(Rectangle().fill(Color.black).shadow(radius: 4).cornerRadius(20))
+                                            .draggable("droptext")
+                                    }
+                                    
+                                    
                                 } .frame(width: 300, height:300)
                             } //Popover 3 end bracket
 
