@@ -43,7 +43,7 @@ struct WelcomeScreenView: View {
         }
             
             VStack{
-                Text("Freeplay Stable Alpha 1.0, Build 276")
+                Text("Freeplay Stable Alpha 1.35, Build 276")
                     .font(Font.caption.bold())
                     .foregroundStyle(Color.gray)
                 
