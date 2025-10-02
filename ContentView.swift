@@ -255,11 +255,11 @@ struct ContentView: View {
                             .popover(isPresented: $isPopover1Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 //Popover Draw
                                 VStack{
-                                    Text("Adjust Color")
+                                //    Text("Adjust Color") removed it for now to make more space inside of the popover
                                     //  .fontWeight(.bold)
                                     //   .font(.headline)
-                                        .font(.system(size: 12, weight: .medium))
-                                        .padding(5)
+                                       //.font(.system(size: 12, weight: .medium))
+                                        //.padding(5)
                                        // .padding(.top, 5)
 
                                     HStack{
@@ -533,12 +533,14 @@ struct ContentView: View {
                                         )
                                     }
 
-                                    Spacer()
+                                    //Spacer()
                                     Text("Line Width")
                                         .padding(.bottom, -10)
                                         .font(.system(size: 12, weight: .medium))
                                     Slider(value: $slider, in: 1.0...100.0, onEditingChanged: { _ in currentLine.lineWidth = slider}) //AI helped me there. //I've done it wrong all the time. I thought this way -> "self.lines.lineWidth" but I've forgotten that there is also the @State variable, which gives me access to the "line.lineWidth" path.
                                         .padding()
+                                    
+                                    Text("Current line width: \(slider)")
 
                                 } .frame(width: 300, height: 140)
                                 //END
