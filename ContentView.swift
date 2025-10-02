@@ -23,6 +23,7 @@ struct Shape: Identifiable {
     var color: Color = .blue
     var size: CGSize = CGSize(width: 170, height: 170)
     var type: ShapeType
+    var text: String = "" // text content for .text shapes
 }
 
 struct droppedText: Identifiable{
@@ -54,7 +55,6 @@ struct ContentView: View {
 
     @State private var currentShape = Shape(type: .rectangle) //Connection between "struct Shape" and "struct ContentView"
     @State private var shapes: [Shape] = []
-    @State private var shape: [Shape] = []
 
     @State private var isPopover1Presented = false
     @State private var value = 1.0
@@ -141,13 +141,19 @@ struct ContentView: View {
                             newShape = Shape(position: location, type: ShapeType.rectangle)
                         } else if typeString == "rounded rectangle" {
                             newShape = Shape(position: location, type: ShapeType.roundedRectangle)
-                        } else if typeString == "droptext" {
-                            newShape = Shape(position: location, type: ShapeType.text)
+                        } else if typeString == "droptext" { //Text
+                            newShape = Shape(position: location, type: ShapeType.text, text: textsoncanvas) //At this part, the Code passes the Text from "textoncanvas" to the Shape.text variable inside the Shape-Struct.
                         } else {
                             return false
                         }
 
                         self.shapes.append(newShape)
+
+                        if typeString == "droptext" {
+                            // reset the input after creating the text shape (Made by Xcode-AI)
+                            self.textsoncanvas = ""
+                        }
+
                         return true
                     } //End DropDestination
 
@@ -193,8 +199,8 @@ struct ContentView: View {
                                     shape.position = value.location
                                 }
                             )
-                    case .text: //My intention of handling the text objects like shapes was absolutely right. But why does this work? Why can't I create just another for Each or something...
-                        Text(textsoncanvas)
+                    case .text: // handle text shapes with model data (Changed by Xcode-AI)
+                        Text(shape.text) //Changed from "textoncanvas, to shape.text" (Changed by Xcode-AI)
                             .font(.system(size: 17, weight: .medium, design: .rounded))
                             .position(shape.position)
                             .gesture(DragGesture()

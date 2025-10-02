@@ -2,13 +2,8 @@
   "colors" : [
     {
       "color" : {
-        "color-space" : "srgb",
-        "components" : {
-          "alpha" : "1.000",
-          "blue" : "237",
-          "green" : "237",
-          "red" : "238"
-        }
+        "platform" : "osx",
+        "reference" : "controlBackgroundColor"
       },
       "idiom" : "universal"
     },
@@ -20,12 +15,12 @@
         }
       ],
       "color" : {
-        "color-space" : "srgb",
+        "color-space" : "display-p3",
         "components" : {
           "alpha" : "1.000",
-          "blue" : "42",
-          "green" : "43",
-          "red" : "45"
+          "blue" : "30",
+          "green" : "32",
+          "red" : "35"
         }
       },
       "idiom" : "universal"
@@ -34,5 +29,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "localizable" : true
   }
 }
