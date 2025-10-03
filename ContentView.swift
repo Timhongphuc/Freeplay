@@ -255,8 +255,8 @@ struct ContentView: View {
                                 Button("Go ahead", role: .destructive) {  self.lines.removeAll(); self.shapes.removeAll()} //Something I am pretty proud of...
                             }
                             
-                        } .buttonStyle(.borderless)
-                            .padding(5)
+                        } .buttonStyle(.automatic)
+                          //  .padding(5)
                     }
 
                     
@@ -269,8 +269,8 @@ struct ContentView: View {
                                 //Text("Pencil")
                                   //  .font(.callout)
                             }
-                        }              .buttonStyle(.borderless)
-                            .padding(5)
+                        }            .buttonStyle(.automatic)
+                          //  .padding(5)
                         
                             .popover(isPresented: $isPopover1Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 //Popover Draw
@@ -589,8 +589,8 @@ struct ContentView: View {
                               //  Text("Shape")
                                 //    .font(.callout)
                             }
-                        }              .buttonStyle(.borderless)
-                            .padding(5)
+                        }            .buttonStyle(.automatic)
+                          //  .padding(5)
                         
                             .popover(isPresented: $isPopover2Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 
@@ -659,8 +659,8 @@ struct ContentView: View {
                                 //Text("Text")
                                   //  .font(.callout)
                             }
-                        }.buttonStyle(.borderless)
-                            .padding(5)
+                        } .buttonStyle(.automatic)
+                           // .padding(5)
                         
                             .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 VStack{
