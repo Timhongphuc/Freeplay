@@ -51,7 +51,7 @@ enum ShapeType {
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
-
+    
     @State private var currentLine = Line() //Connection between "struct Line" and "struct ContentView"
     @State private var lines: [Line] = []
 
@@ -95,49 +95,49 @@ struct ContentView: View {
 
     var body: some View {
         ScrollView([.horizontal, .vertical]){
-            ZStack {
-
-                Canvas { context, size in
-
-                    for line in lines {
-                        var path = Path()
-                        path.addLines(line.points)
-                        context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
-                    }
-
-                }.gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
-
-                    .onChanged({value in
-                        let newPoint = value.location //Location inside the Window/Canvas
-                        currentLine.points.append(newPoint)
-                        self.lines.append(currentLine)
-                        currentLine.lineWidth = self.value
-                        currentLine.color = self.currentColor
-
-                        if self.checkEraserStatus == true {
-                            currentLine.lineWidth = lineWidthforEraser //Or currentLine.lineWidth = 7.0 (Let's see!)
-                        } else if currentTool == .pencil {
-                            self.value = 1.0
-                            currentLine.lineWidth = self.slider
-                            // NSCursor.crosshair
+                ZStack {
+                    
+                    Canvas { context, size in
+                        
+                        for line in lines {
+                            var path = Path()
+                            path.addLines(line.points)
+                            context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
                         }
-                    })
-                        .onEnded ({ value in
+                        
+                    }.gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                              
+                        .onChanged({value in
+                            let newPoint = value.location //Location inside the Window/Canvas
+                            currentLine.points.append(newPoint)
                             self.lines.append(currentLine)
                             currentLine.lineWidth = self.value
-                            self.currentLine = Line() //Important, so the new lines won't connect with the "old" lines.
                             currentLine.color = self.currentColor
+                            
+                            if self.checkEraserStatus == true {
+                                currentLine.lineWidth = lineWidthforEraser //Or currentLine.lineWidth = 7.0 (Let's see!)
+                            } else if currentTool == .pencil {
+                                self.value = 1.0
+                                currentLine.lineWidth = self.slider
+                                // NSCursor.crosshair
+                            }
                         })
-
-                )
-                // .background(background)
-
+                            .onEnded ({ value in
+                                self.lines.append(currentLine)
+                                currentLine.lineWidth = self.value
+                                self.currentLine = Line() //Important, so the new lines won't connect with the "old" lines.
+                                currentLine.color = self.currentColor
+                            })
+                              
+                    )
+                    // .background(background)
+                    
                     .dropDestination(for: String.self) { droppedShapes, location in //I moved it into the Canvas because
-
+                        
                         guard let typeString = droppedShapes.first else { return false }
-
+                        
                         let newShape: Shape
-
+                        
                         if typeString == "circle" {
                             newShape = Shape(position: location, type: ShapeType.circle) //Is there a possibility for CGPoint?
                         } else if typeString == "ellipse" {
@@ -151,76 +151,80 @@ struct ContentView: View {
                         } else {
                             return false
                         }
-
+                        
                         self.shapes.append(newShape)
-
+                        
                         if typeString == "droptext" {
                             // reset the input after creating the text shape (Made by Xcode-AI)
                             self.textsoncanvas = ""
                         }
-
+                        
                         return true
                     } //End DropDestination
-
-                ForEach($shapes) { $shape in //Construction plan for every shape (If it works lol).
-                    switch shape.type {
-                    case .rectangle:
-                        Rectangle()
-                            .fill(shape.color)
-                            .frame(width: shape.size.width, height: shape.size.height)
-                            .position(shape.position)
-                            .gesture(DragGesture()
-                                .onChanged { value in
-                                    shape.position = value.location
-                                }
-                            )
-                    case .circle:
-                        Circle()
-                            .fill(shape.color)
-                            .frame(width: shape.size.width, height: shape.size.height)
-                            .position(shape.position)
-                            .gesture(DragGesture()
-                                .onChanged { value in
-                                    shape.position = value.location
-                                }
-                            )
-                    case .ellipse:
-                        Ellipse()
-                            .fill(shape.color)
-                            .frame(width: shape.size.width + 100, height: shape.size.height)
-                            .position(shape.position)
-                            .gesture(DragGesture()
-                                .onChanged { value in
-                                    shape.position = value.location
-                                }
-                            )
-                    case .roundedRectangle:
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(shape.color)
-                            .frame(width: shape.size.width, height: shape.size.height)
-                            .position(shape.position)
-                            .gesture(DragGesture()
-                                .onChanged { value in
-                                    shape.position = value.location
-                                }
-                            )
-                    case .text: // handle text shapes with model data (Changed by Xcode-AI)
-                        Text(shape.text) //Changed from "textoncanvas, to shape.text" (Changed by Xcode-AI)
-                            .font(.system(size: shape.fontSize, weight: .medium, design: .rounded))
-                            .position(shape.position)
-                            .gesture(DragGesture()
-                                .onChanged { value in
-                                    shape.position = value.location
-                                }
-                            )
+                    
+                    ForEach($shapes) { $shape in //Construction plan for every shape (If it works lol).
+                        switch shape.type {
+                        case .rectangle:
+                            Rectangle()
+                                .fill(shape.color)
+                                .frame(width: shape.size.width, height: shape.size.height)
+                                .position(shape.position)
+                                .gesture(DragGesture()
+                                    .onChanged { value in
+                                        shape.position = value.location
+                                    }
+                                )
+                        case .circle:
+                            Circle()
+                                .fill(shape.color)
+                                .frame(width: shape.size.width, height: shape.size.height)
+                                .position(shape.position)
+                                .gesture(DragGesture()
+                                    .onChanged { value in
+                                        shape.position = value.location
+                                    }
+                                )
+                        case .ellipse:
+                            Ellipse()
+                                .fill(shape.color)
+                                .frame(width: shape.size.width + 100, height: shape.size.height)
+                                .position(shape.position)
+                                .gesture(DragGesture()
+                                    .onChanged { value in
+                                        shape.position = value.location
+                                    }
+                                )
+                        case .roundedRectangle:
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(shape.color)
+                                .frame(width: shape.size.width, height: shape.size.height)
+                                .position(shape.position)
+                                .gesture(DragGesture()
+                                    .onChanged { value in
+                                        shape.position = value.location
+                                    }
+                                )
+                        case .text: // handle text shapes with model data (Changed by Xcode-AI)
+                            Text(shape.text) //Changed from "textoncanvas, to shape.text" (Changed by Xcode-AI)
+                                .font(.system(size: shape.fontSize, weight: .medium, design: .rounded))
+                                .position(shape.position)
+                                .gesture(DragGesture()
+                                    .onChanged { value in
+                                        shape.position = value.location
+                                    }
+                                )
+                        }
                     }
-                }
-
-            } //ZStack Ending
+                    
+                } //ZStack Ending
                 .frame(minWidth: 10000, minHeight: 10000)
                 .padding()
                 .toolbar {
-
+                    
+                    ToolbarItem(placement: .primaryAction) { //Key button to export the Canvas as a PDF. (Not fully finished yet: 03. Oct. 2025, 4:04pm)
+                        ViewRendererToPDF()
+                    }
+                    
                     ToolbarItem(placement: .primaryAction) {
                         //Image(systemName: "trash.fill")
                         Button(){
@@ -235,11 +239,12 @@ struct ContentView: View {
                                 Button("Cancel", role: .cancel) { }
                                 Button("Go ahead", role: .destructive) {  self.lines.removeAll(); self.shapes.removeAll()} //Something I am pretty proud of...
                             }
-
+                            
                         } .buttonStyle(.borderless)
                             .padding(5)
                     }
 
+                    
                     ToolbarItem(placement: .principal){
                         Button(action: {
                             isPopover1Presented.toggle()
@@ -251,17 +256,17 @@ struct ContentView: View {
                             }
                         }              .buttonStyle(.borderless)
                             .padding(5)
-
+                        
                             .popover(isPresented: $isPopover1Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 //Popover Draw
                                 VStack{
-                                //    Text("Adjust Color") removed it for now to make more space inside of the popover
+                                    //    Text("Adjust Color") removed it for now to make more space inside of the popover
                                     //  .fontWeight(.bold)
                                     //   .font(.headline)
-                                       //.font(.system(size: 12, weight: .medium))
-                                        //.padding(5)
-                                       // .padding(.top, 5)
-
+                                    //.font(.system(size: 12, weight: .medium))
+                                    //.padding(5)
+                                    // .padding(.top, 5)
+                                    
                                     HStack{
                                         if colorScheme == .light{
                                             Button{
@@ -272,7 +277,7 @@ struct ContentView: View {
                                                     currentLine.lineWidth = self.value
                                                     self.checkEraserStatus = false
                                                     self.currentTool = .pencil
-
+                                                    
                                                     self.isGreentoggled = false
                                                     self.isBluetoggled = false
                                                     self.isRedtoggled = false
@@ -307,7 +312,7 @@ struct ContentView: View {
                                                     currentLine.lineWidth = self.value
                                                     self.checkEraserStatus = false
                                                     self.currentTool = .pencil
-
+                                                    
                                                     self.isGreentoggled = false
                                                     self.isBluetoggled = false
                                                     self.isRedtoggled = false
@@ -335,14 +340,14 @@ struct ContentView: View {
                                                 : nil
                                             )
                                         }
-
+                                        
                                         Button{
                                             currentColor = .blue
                                             if currentColor == .blue{
                                                 self.isBluetoggled.toggle()
                                                 self.checkEraserStatus = false
                                                 self.currentTool = .pencil
-
+                                                
                                                 self.isGreentoggled = false
                                                 self.isRedtoggled = false
                                                 self.isYellowtoggled = false
@@ -367,14 +372,14 @@ struct ContentView: View {
                                             .overlay(
                                                 isBluetoggled ? Circle().stroke(Color.blue, lineWidth: 3) : nil
                                             )
-
+                                        
                                         Button{
                                             currentColor = .green
                                             if currentColor == .green{
                                                 self.isGreentoggled.toggle()
                                                 self.checkEraserStatus = false
                                                 self.currentTool = .pencil
-
+                                                
                                                 self.isBluetoggled = false
                                                 self.isRedtoggled = false
                                                 self.isYellowtoggled = false
@@ -400,14 +405,14 @@ struct ContentView: View {
                                         .overlay(
                                             isGreentoggled ? Circle().stroke(Color.blue, lineWidth: 3) : nil
                                         )
-
+                                        
                                         Button{
                                             currentColor = .red
                                             if currentColor == .red{
                                                 self.isRedtoggled.toggle()
                                                 self.checkEraserStatus = false
                                                 self.currentTool = .pencil
-
+                                                
                                                 self.isGreentoggled = false
                                                 self.isBluetoggled = false
                                                 self.isYellowtoggled = false
@@ -433,14 +438,14 @@ struct ContentView: View {
                                         .overlay(
                                             isRedtoggled ? Circle().stroke(Color.blue, lineWidth: 3) : nil
                                         )
-
+                                        
                                         Button{
                                             currentColor = .yellow
                                             if currentColor == .yellow{
                                                 self.isYellowtoggled.toggle()
                                                 self.checkEraserStatus = false
                                                 self.currentTool = .pencil
-
+                                                
                                                 self.isGreentoggled = false
                                                 self.isBluetoggled = false
                                                 self.isRedtoggled = false
@@ -466,7 +471,7 @@ struct ContentView: View {
                                         .overlay(
                                             isYellowtoggled ? Circle().stroke(Color.blue, lineWidth: 3) : nil
                                         )
-
+                                        
                                         Button{
                                             currentColor = .orange
                                             if currentColor == .orange{
@@ -475,7 +480,7 @@ struct ContentView: View {
                                                 currentLine.lineWidth = self.value
                                                 self.checkEraserStatus = false
                                                 self.currentTool = .pencil
-
+                                                
                                                 self.isGreentoggled = false
                                                 self.isBluetoggled = false
                                                 self.isRedtoggled = false
@@ -502,12 +507,12 @@ struct ContentView: View {
                                             isOreangetoggled ? Circle().stroke(Color.blue, lineWidth: 3)
                                             : nil
                                         )
-
+                                        
                                         Button{
                                             currentColor = Color("Eraser Color")
                                             currentLine.lineWidth = self.lineWidthforEraser
                                             self.checkEraserStatus.toggle()
-
+                                            
                                             self.isGreentoggled = false
                                             self.isBluetoggled = false
                                             self.isRedtoggled = false
@@ -532,7 +537,7 @@ struct ContentView: View {
                                             : nil
                                         )
                                     }
-
+                                    
                                     //Spacer()
                                     Text("Line Width")
                                         .padding(.bottom, -10)
@@ -541,14 +546,14 @@ struct ContentView: View {
                                         .padding()
                                     
                                     Text("Current line width: \(slider)")
-
+                                    
                                 } .frame(width: 300, height: 140)
                                 //END
                             }
                     }
-
+                    
                     //Popover 2 beginning
-
+                    
                     //                ToolbarItem(placement: .principal) {
                     //                    Button(){
                     //                        self.isPopover2Presented.toggle()
@@ -570,10 +575,10 @@ struct ContentView: View {
                                     .font(.callout)
                             }
                         }              .buttonStyle(.borderless)
-                                .padding(5)
-
+                            .padding(5)
+                        
                             .popover(isPresented: $isPopover2Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
-
+                                
                                 VStack {
                                     HStack{
                                         Circle()
@@ -586,7 +591,7 @@ struct ContentView: View {
                                             .padding(.horizontal, 30)
                                             .draggable("ellipse")
                                     } .padding(1)
-
+                                    
                                     HStack{
                                         Rectangle()
                                             .padding(20)
@@ -597,39 +602,39 @@ struct ContentView: View {
                                             .scaledToFit()
                                             .draggable("rounded rectangle")
                                     }
-
-//                                    VStack{
-//                                        HStack{
-//                                            Button{
-//                                                self.currentShape.color = .black
-//                                            } label: {
-//                                                Text("")
-//                                                    .font(.headline)
-//                                                    .fontWeight(.semibold)
-//                                                    .padding(.vertical, 12)
-//                                                    .padding(.horizontal, 12)
-//                                                    .background(
-//                                                        Circle()
-//                                                            .fill(Color.black)
-//                                                    )
-//                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
-//                                            }
-//                                            .buttonStyle(.plain)
-//                                            .overlay(
-//                                                self.currentShape.color == .black ? Circle().stroke(Color.blue, lineWidth: 3)
-//                                                : nil
-//                                            )
-//
-//                                        }
-//                                    } UNDER CONSTRUCTION!
-
+                                    
+                                    //                                    VStack{
+                                    //                                        HStack{
+                                    //                                            Button{
+                                    //                                                self.currentShape.color = .black
+                                    //                                            } label: {
+                                    //                                                Text("")
+                                    //                                                    .font(.headline)
+                                    //                                                    .fontWeight(.semibold)
+                                    //                                                    .padding(.vertical, 12)
+                                    //                                                    .padding(.horizontal, 12)
+                                    //                                                    .background(
+                                    //                                                        Circle()
+                                    //                                                            .fill(Color.black)
+                                    //                                                    )
+                                    //                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                                    //                                            }
+                                    //                                            .buttonStyle(.plain)
+                                    //                                            .overlay(
+                                    //                                                self.currentShape.color == .black ? Circle().stroke(Color.blue, lineWidth: 3)
+                                    //                                                : nil
+                                    //                                            )
+                                    //
+                                    //                                        }
+                                    //                                    } UNDER CONSTRUCTION!
+                                    
                                 } .frame(width: 300, height: 300)
                             }
                     } //Toolbar element (item) shapes collection preview ending...
-
-
-
-
+                    
+                    
+                    
+                    
                     ToolbarItem(placement: .principal){
                         Button(action: {
                             isPopover3Presented.toggle()
@@ -641,18 +646,18 @@ struct ContentView: View {
                             }
                         }.buttonStyle(.borderless)
                             .padding(5)
-
+                        
                             .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 VStack{
-
+                                    
                                     TextField("Enter your text here...", text: $textsoncanvas)
                                         .padding(20)
-                                      //  .padding(.bottom, 240)
-
-//                                    RoundedRectangle(cornerRadius: 20)
-//                                        .fill(Color.white)
-//                                        .padding(20)
-
+                                    //  .padding(.bottom, 240)
+                                    
+                                    //                                    RoundedRectangle(cornerRadius: 20)
+                                    //                                        .fill(Color.white)
+                                    //                                        .padding(20)
+                                    
                                     Slider(value: $fontSizeonCanvas, in: 10.0...50.0, step: 1.0)
                                         .padding(.horizontal, 10)
                                     Text("Font size: \(fontSizeonCanvas)")
@@ -678,16 +683,15 @@ struct ContentView: View {
                                     
                                 } .frame(width: 300, height:300)
                             } //Popover 3 end bracket
-
-                        }
-
-
-
-            }.frame(width: 10000, height: 10000) //.toolbar ending bracet
-
-         }
-
-      }
+                        
+                    }
+                    
+                    
+                    
+                }.frame(width: 10000, height: 10000) //.toolbar ending bracet
+                
+            }
+        }
  }
 
 #Preview {
