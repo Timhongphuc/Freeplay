@@ -92,7 +92,22 @@ struct ContentView: View {
    // @State private var fontSize: Double = 0  (Notes: Only make it a Double, if you wanna geet precision values.)
     //@State private var fontSize = 0.0 (This is now placed in: 'Shape.fontSize')
     @State private var fontSizeonCanvas = 0.0
-
+    
+    //FUNCTIONS:
+    func render() -> URL { //AI helped me there. Got most of it out of/From Tutorial "Hacking with Swift; Paul Hudson: https://www.hackingwithswift.com/quick-start/swiftui/how-to-render-a-swiftui-view-to-a-pdf"
+        let renderer = ImageRenderer(content: CanvasExportView(lines: lines, shapes: shapes))
+        let url = URL.documentsDirectory.appending(path: "Export.pdf")
+        renderer.render  { size, context in
+            var box = CGRect(origin: .zero, size: size)
+            guard let pdf = CGContext(url as CFURL, mediaBox: &box, nil) else { return }
+            pdf.beginPDFPage(nil)
+            context(pdf)
+            pdf.endPDFPage()
+            pdf.closePDF()
+        }
+        return url
+    }
+    
     var body: some View {
         ScrollView([.horizontal, .vertical]){
                 ZStack {
@@ -222,7 +237,7 @@ struct ContentView: View {
                 .toolbar {
                     
                     ToolbarItem(placement: .primaryAction) { //Key button to export the Canvas as a PDF. (Not fully finished yet: 03. Oct. 2025, 4:04pm)
-                        ViewRendererToPDF()
+                        ShareLink("Export", item: render())
                     }
                     
                     ToolbarItem(placement: .primaryAction) {
@@ -697,3 +712,51 @@ struct ContentView: View {
 #Preview {
     ContentView()
  }
+
+//EXPERIMENTAL
+        struct CanvasExportView: View {  //AI helped me here...
+            var lines: [Line]
+            var shapes: [Shape]
+            
+            var body: some View {
+                ZStack {
+                    Canvas { context, size in
+                        for line in lines {
+                            var path = Path()
+                            path.addLines(line.points)
+                            context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
+                        }
+                    }
+                    ForEach(shapes) { shape in
+                        switch shape.type {
+                        case .rectangle:
+                            Rectangle()
+                                .fill(shape.color)
+                                .frame(width: shape.size.width, height: shape.size.height)
+                                .position(shape.position)
+                        case .circle:
+                            Circle()
+                                .fill(shape.color)
+                                .frame(width: shape.size.width, height: shape.size.height)
+                                .position(shape.position)
+                        case .ellipse:
+                            Ellipse()
+                                .fill(shape.color)
+                                .frame(width: shape.size.width + 100, height: shape.size.height)
+                                .position(shape.position)
+                        case .roundedRectangle:
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(shape.color)
+                                .frame(width: shape.size.width, height: shape.size.height)
+                                .position(shape.position)
+                        case .text:
+                            Text(shape.text)
+                                .font(.system(size: shape.fontSize, weight: .medium, design: .rounded))
+                                .position(shape.position)
+                        }
+                    }
+                }
+                .frame(width: 10000, height: 10000)
+                .padding()
+            }
+        }
