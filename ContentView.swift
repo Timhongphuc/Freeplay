@@ -247,8 +247,8 @@ struct ContentView: View {
                         } label: {
                             VStack{
                                 Image(systemName: "trash.fill")
-                                Text("Clear Whiteboard")
-                                    .font(.callout)
+                                //Text("Clear Whiteboard")
+                                  //  .font(.callout)
                             }
                             .alert("Are you sure? This action cannot be undone.", isPresented: $showingAlert){
                                 Button("Cancel", role: .cancel) { }
@@ -266,8 +266,8 @@ struct ContentView: View {
                         }) {
                             VStack{
                                 Image(systemName: "pencil.and.scribble")
-                                Text("Pencil")
-                                    .font(.callout)
+                                //Text("Pencil")
+                                  //  .font(.callout)
                             }
                         }              .buttonStyle(.borderless)
                             .padding(5)
@@ -586,8 +586,8 @@ struct ContentView: View {
                         }) {
                             VStack{
                                 Image(systemName: "capsule.on.rectangle.fill")
-                                Text("Shape")
-                                    .font(.callout)
+                              //  Text("Shape")
+                                //    .font(.callout)
                             }
                         }              .buttonStyle(.borderless)
                             .padding(5)
@@ -656,8 +656,8 @@ struct ContentView: View {
                         }) {
                             VStack{
                                 Image(systemName: "character.cursor.ibeam")
-                                Text("Text")
-                                    .font(.callout)
+                                //Text("Text")
+                                  //  .font(.callout)
                             }
                         }.buttonStyle(.borderless)
                             .padding(5)
@@ -718,7 +718,7 @@ struct ContentView: View {
             var lines: [Line]
             var shapes: [Shape]
             
-            var body: some View {
+            var body: some View { //Every element(s) out of the Canvas had to get exported.
                 ZStack {
                     Canvas { context, size in
                         for line in lines {
