@@ -15,6 +15,7 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 
 ## Coming soon...
 
+- Perfomance improvements
 - Features for color customization of the Shapes and Text
 - Drop Pictures onto the canvas
 - Design improvements (Probably a few more gradients or so)
