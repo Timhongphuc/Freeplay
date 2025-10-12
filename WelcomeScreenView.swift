@@ -10,7 +10,7 @@ import SwiftUI
 struct WelcomeScreenView: View {
     var body: some View {
         NavigationStack{
-            Spacer(minLength: 270)
+            Spacer(minLength: 200)
             HStack{
                 Text("Welcome back to")
                     .font(Font.largeTitle.bold())
@@ -21,7 +21,7 @@ struct WelcomeScreenView: View {
                                 .topLeading, endPoint: .bottomTrailing
                         )
                     )
-            } //HStack End
+            } //.padding(.top, 200) //HStack End
             
             HStack{
                 NavigationLink{
@@ -40,7 +40,7 @@ struct WelcomeScreenView: View {
                 Text("Quit Freeplay")
                     .font(.system(size: 12, weight: .semibold))
             }
-        }
+            }
             
             VStack{
                 Text("Freeplay Stable Alpha 1.35, Build 276")
@@ -52,7 +52,6 @@ struct WelcomeScreenView: View {
                 Text("The Freeplay Project is open source at: https://github.com/Timhongphuc/Freeplay")
                     .font(Font.caption.bold())
             }
-            
         } //.frame(width: 500, height: 300)
     }
 }

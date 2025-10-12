@@ -96,7 +96,7 @@ struct ContentView: View {
     //FUNCTIONS:
     func render() -> URL { //AI helped me there. Got most of it out of/From Tutorial "Hacking with Swift; Paul Hudson: https://www.hackingwithswift.com/quick-start/swiftui/how-to-render-a-swiftui-view-to-a-pdf"
         let renderer = ImageRenderer(content: CanvasExportView(lines: lines, shapes: shapes))
-        let url = URL.documentsDirectory.appending(path: "Export.pdf")
+        let url = URL.documentsDirectory.appending(path: "Freeplay-Export.pdf")
         renderer.render  { size, context in
             var box = CGRect(origin: .zero, size: size)
             guard let pdf = CGContext(url as CFURL, mediaBox: &box, nil) else { return }
