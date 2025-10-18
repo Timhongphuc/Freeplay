@@ -93,6 +93,10 @@ struct ContentView: View {
     //@State private var fontSize = 0.0 (This is now placed in: 'Shape.fontSize')
     @State private var fontSizeonCanvas = 0.0
     
+    @State private var isPopover4Presented: Bool = false
+    @State private var chosenPath: String = ""
+    @State private var loadedImage: NSImage? = nil //Why? (18.10.2025, 2:40pm)
+    
     //FUNCTIONS:
     func render() -> URL { //AI helped me there. Got most of it out of/From Tutorial "Hacking with Swift; Paul Hudson: https://www.hackingwithswift.com/quick-start/swiftui/how-to-render-a-swiftui-view-to-a-pdf"
         let renderer = ImageRenderer(content: CanvasExportView(lines: lines, shapes: shapes))
@@ -701,6 +705,45 @@ struct ContentView: View {
                         
                     }
                     
+                    ToolbarItem(placement: .principal){
+                        Button(action: {
+                            isPopover4Presented.toggle()
+                        }) {
+                            VStack{
+                                Image(systemName: "photo.fill")
+                            }
+                        }.buttonStyle(.automatic)
+                        
+                            .popover(isPresented: $isPopover4Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom){
+                                VStack{
+                                    Button(){
+//                                        let panel = NSOpenPanel()
+//                                        if panel.runModal() == .OK {
+//                                            if let url = panel.url {
+//                                                self.chosenPath = url.path
+//                                            }
+//                                        } EXPERIMENTAIL AND AI GENERATED
+                
+                                        //Draggable Object -> Image
+                                        
+                                        
+                                    } label: {
+                                        Text("Browse your images...")
+                                            .foregroundStyle(Color.white)
+                                            .font(.headline)
+                                            .fontWeight(.semibold)
+                                            .padding(.vertical, 12)
+                                            .padding(.horizontal, 40)
+                                            .background(
+                                                Rectangle()
+                                                    .fill(Color.blue)
+                                                    .cornerRadius(7)
+                                            )
+                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                                    }.buttonStyle(.borderless)
+                                }.frame(width: 250, height: 70)
+                            }
+                    }
                     
                     
                 }.frame(width: 10000, height: 10000) //.toolbar ending bracet
@@ -713,7 +756,7 @@ struct ContentView: View {
     ContentView()
  }
 
-//EXPERIMENTAL
+//EXPERIMENTAL (Tool for Export!)
         struct CanvasExportView: View {  //AI helped me here...
             var lines: [Line]
             var shapes: [Shape]
