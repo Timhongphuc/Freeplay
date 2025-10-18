@@ -26,7 +26,6 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 <img width="1228" height="773" alt="Bildschirmfoto 2025-09-27 um 12 08 32" src="https://github.com/user-attachments/assets/57141e8f-d568-4da8-853c-b2fdbb017e43" />
 
 ### Main Screen:
-<img width="1244" height="773" alt="Bildschirmfoto 2025-09-27 um 12 13 35" src="https://github.com/user-attachments/assets/a68a84c1-ff2e-43a6-82c4-e79a62217486" />
-
+<img width="921" height="604" alt="Bildschirmfoto 2025-10-18 um 15 02 02" src="https://github.com/user-attachments/assets/c13d2252-ff33-4053-ae27-614ec79af5f8" />
 
 ## Hopefully you can enjoy Freeplay as much as I did while building it!
