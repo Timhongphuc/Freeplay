@@ -10,6 +10,8 @@ import SwiftUI
 import PencilKit
 import AppKit
 import Foundation
+import PhotosUI
+import FileProviderUI
 
 struct Line { //Pretty similar to an GET/(POST) API CALL -> "line.lineWidth" ... parallels are there/given ;)
     var points = [CGPoint]()
@@ -95,7 +97,7 @@ struct ContentView: View {
     
     @State private var isPopover4Presented: Bool = false
     @State private var chosenPath: String = ""
-    @State private var loadedImage: NSImage? = nil //Why? (18.10.2025, 2:40pm)
+ //   @State private var loadedImage: NSImage? = nil //Why? (18.10.2025, 2:40pm)
     
     //FUNCTIONS:
     func render() -> URL { //AI helped me there. Got most of it out of/From Tutorial "Hacking with Swift; Paul Hudson: https://www.hackingwithswift.com/quick-start/swiftui/how-to-render-a-swiftui-view-to-a-pdf"
@@ -717,14 +719,7 @@ struct ContentView: View {
                             .popover(isPresented: $isPopover4Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom){
                                 VStack{
                                     Button(){
-//                                        let panel = NSOpenPanel()
-//                                        if panel.runModal() == .OK {
-//                                            if let url = panel.url {
-//                                                self.chosenPath = url.path
-//                                            }
-//                                        } EXPERIMENTAIL AND AI GENERATED
-                
-                                        //Draggable Object -> Image
+                                        
                                         
                                         
                                     } label: {
