@@ -13,7 +13,7 @@ struct TestView : View {
     var body: some View {
         Button("Open") {
             presentImporter = true
-        }.fileImporter(isPresented: $presentImporter, allowedContentTypes: [.pdf]) { result in
+        }.fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in
             switch result {
             case .success(let url):
                 print(url)

@@ -98,6 +98,7 @@ struct ContentView: View {
     @State private var isPopover4Presented: Bool = false
     @State private var chosenPath: String = ""
  //   @State private var loadedImage: NSImage? = nil //Why? (18.10.2025, 2:40pm)
+    @State private var presentImporter = false
     
     //FUNCTIONS:
     func render() -> URL { //AI helped me there. Got most of it out of/From Tutorial "Hacking with Swift; Paul Hudson: https://www.hackingwithswift.com/quick-start/swiftui/how-to-render-a-swiftui-view-to-a-pdf"
@@ -718,11 +719,8 @@ struct ContentView: View {
                         
                             .popover(isPresented: $isPopover4Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom){
                                 VStack{
-                                    Button(){
+                                    Button(action: { presentImporter = true }) {
                                         
-                                        
-                                        
-                                    } label: {
                                         Text("Browse your images...")
                                             .foregroundStyle(Color.white)
                                             .font(.headline)
@@ -730,12 +728,36 @@ struct ContentView: View {
                                             .padding(.vertical, 12)
                                             .padding(.horizontal, 40)
                                             .background(
-                                                Rectangle()
-                                                    .fill(Color.blue)
-                                                    .cornerRadius(7)
+                                            Rectangle()
+                                                .fill(Color.blue)
+                                                .cornerRadius(7)
                                             )
                                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
-                                    }.buttonStyle(.borderless)
+                                        
+                                    }.fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in //From: https://stackoverflow.com/questions/68885275/how-can-i-grab-a-pdf-file-from-the-files-app-in-swiftui-and-import-it-into-my-ap
+                                        switch result {
+                                        case .success(let url):
+                                            print(url)
+                                            //use `url.startAccessingSecurityScopedResource()` if you are going to read the data
+                                        case .failure(let error):
+                                            print(error)
+                                        }
+                                    }
+                                    .buttonStyle(.borderless)
+//                                    } label: {
+//                                        Text("Browse your images...")
+//                                            .foregroundStyle(Color.white)
+//                                            .font(.headline)
+//                                            .fontWeight(.semibold)
+//                                            .padding(.vertical, 12)
+//                                            .padding(.horizontal, 40)
+//                                            .background(
+//                                                Rectangle()
+//                                                    .fill(Color.blue)
+//                                                    .cornerRadius(7)
+//                                            )
+//                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+//                                    }.buttonStyle(.borderless)
                                 }.frame(width: 250, height: 70)
                             }
                     }
