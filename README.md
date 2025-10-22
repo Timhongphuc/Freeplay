@@ -28,4 +28,10 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 ### Main Screen:
 <img width="921" height="604" alt="Bildschirmfoto 2025-10-18 um 15 02 02" src="https://github.com/user-attachments/assets/c13d2252-ff33-4053-ae27-614ec79af5f8" />
 
-## Hopefully you can enjoy Freeplay as much as I did while building it!
+## Project information
+
+- Duration of the Project (Beginnging - End): 21. August 2025 - Now. 
+- Sticky notes used: ≈ 26
+- Hours I spend building this Project: ≈ 30h (or even more idk.)
+
+# Hopefully you can enjoy Freeplay as much as I did while building it!
