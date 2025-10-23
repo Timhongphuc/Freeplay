@@ -23,6 +23,7 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Drop Pictures onto the canvas
 - Minor bugfixes
 - Design improvements (Probably a few more gradients or so)
+- Sidebar
 - AI
 
 ## Installation
