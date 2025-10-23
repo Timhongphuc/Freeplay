@@ -36,19 +36,26 @@ struct droppedText: Identifiable{
     var content: String = ""
 }
 
+struct droppedImage: Identifiable{
+    let id = UUID()
+    var position = CGPoint(x: 100, y: 100)
+    var image: NSImage
+}
+
 enum Tools {
     case pencil
     case eraser
     case shapes
 }
 
-enum ShapeType {
+enum ShapeType { //Okay, I have to admit: It wasn't the best idea of mine to put (nearly) every Canvas item inside the Shape enum and struct...but I thought: "make it work first".
     case circle
     case ellipse
     case rectangle
     case roundedRectangle
     case text //For the text feature for now. But I think I have to fix it later.
-   // case triangle
+    // case triangle
+    //case image
 }
 
 struct ContentView: View {
@@ -70,7 +77,7 @@ struct ContentView: View {
     @State private var currentTool: Tools = .pencil
 
     @State private var showingAlert = false
-    @State private var background = Image("Grid")
+    //@State private var background = Image("Grid")
 
     @State private var lineWidthforEraser = 30.0
     @State private var checkEraserStatus: Bool = false
@@ -97,11 +104,15 @@ struct ContentView: View {
     
     @State private var isPopover4Presented: Bool = false
     @State private var chosenPath: String = ""
- //   @State private var loadedImage: NSImage? = nil //Why? (18.10.2025, 2:40pm)
+    @State private var loadedImage: NSImage? = nil //Why? (18.10.2025, 2:40pm)
     @State private var presentImporter = false
+    @State private var isTheImageloaded = false
+
+    // Added for image position state: MADE BY AI LOL (But why? It also worked with the other objects)
+    @State private var loadedImagePosition = CGPoint(x: 120, y: 120)
     
     //FUNCTIONS:
-    func render() -> URL { //AI helped me there. Got most of it out of/From Tutorial "Hacking with Swift; Paul Hudson: https://www.hackingwithswift.com/quick-start/swiftui/how-to-render-a-swiftui-view-to-a-pdf"
+    func render() -> URL {
         let renderer = ImageRenderer(content: CanvasExportView(lines: lines, shapes: shapes))
         let url = URL.documentsDirectory.appending(path: "Freeplay-Export.pdf")
         renderer.render  { size, context in
@@ -233,6 +244,21 @@ struct ContentView: View {
                                 .gesture(DragGesture()
                                     .onChanged { value in
                                         shape.position = value.location
+                                    }
+                                )
+                        }
+                    }
+                    
+                    if isTheImageloaded == true { //So let's see, if the position in the code works out well...(Spoiler: yes it does but there is much work left.)
+                        if let loadedImage { 
+                            Image(nsImage: loadedImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 500, height: 700)
+                                .position(loadedImagePosition) // Use the state variable for position
+                                .gesture(DragGesture()
+                                    .onChanged { value in
+                                        loadedImagePosition = value.location // Update position
                                     }
                                 )
                         }
@@ -734,30 +760,28 @@ struct ContentView: View {
                                             )
                                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
                                         
-                                    }.fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in //From: https://stackoverflow.com/questions/68885275/how-can-i-grab-a-pdf-file-from-the-files-app-in-swiftui-and-import-it-into-my-ap
+                                    }.fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in //Got this code from: https://stackoverflow.com/questions/68885275/how-can-i-grab-a-pdf-file-from-the-files-app-in-swiftui-and-import-it-into-my-ap
                                         switch result {
                                         case .success(let url):
+                                            
+                                            if url.startAccessingSecurityScopedResource() {
+                                                if let image = NSImage(contentsOf: url){
+                                                    loadedImage = image //Apple Intelligence helped me.
+                                                    isTheImageloaded = true
+                                                    loadedImagePosition = CGPoint(x: 120, y: 120) // Reset position on new image load
+                                                }
+                                                url.stopAccessingSecurityScopedResource()
+                                            }
+                                            
                                             print(url)
-                                            //use `url.startAccessingSecurityScopedResource()` if you are going to read the data
+                                            //print("Test-11")
+                                            //use url.startAccessingSecurityScopedResource() if you are going to read the data
                                         case .failure(let error):
-                                            print(error)
+                                            print("Error while loading image:", error)
+                                            isTheImageloaded = false
                                         }
-                                    }
-                                    .buttonStyle(.borderless)
-//                                    } label: {
-//                                        Text("Browse your images...")
-//                                            .foregroundStyle(Color.white)
-//                                            .font(.headline)
-//                                            .fontWeight(.semibold)
-//                                            .padding(.vertical, 12)
-//                                            .padding(.horizontal, 40)
-//                                            .background(
-//                                                Rectangle()
-//                                                    .fill(Color.blue)
-//                                                    .cornerRadius(7)
-//                                            )
-//                                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
-//                                    }.buttonStyle(.borderless)
+                                    }.buttonStyle(.borderless)
+
                                 }.frame(width: 250, height: 70)
                             }
                     }
@@ -820,3 +844,4 @@ struct ContentView: View {
                 .padding()
             }
         }
+
