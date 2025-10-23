@@ -37,7 +37,7 @@ cd Freeplay
 
 ### Method 2: 
 
-Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://github.com/Timhongphuc/Freeplay/releases) 
+Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://github.com/Timhongphuc/Freeplay/tags) 
 
 ## Screenshots
 
