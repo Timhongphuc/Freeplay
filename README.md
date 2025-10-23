@@ -24,6 +24,21 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Design improvements (Probably a few more gradients or so)
 - AI
 
+## Installation
+
+There are two diffrent ways of installing Freeplay: 
+### Method 1: 
+
+```bash
+git clone https://github.com/Timhongphuc/Freeplay.git
+cd Freeplay
+```
+-> And then run it inside Xcode 
+
+### Method 2: 
+
+Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://github.com/Timhongphuc/Freeplay/releases) 
+
 ## Screenshots
 
 ### Welcome Screen:
