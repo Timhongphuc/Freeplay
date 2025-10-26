@@ -734,6 +734,10 @@ struct ContentView: View {
                             }
                     }
                     
+                    //ToolbarItem(placement: .secondaryAction){
+                      //  AI_Sidebar()
+                    //}
+                    
                     
                 }.frame(width: 10000, height: 10000)
             }
