@@ -48,14 +48,13 @@ enum Tools {
     case shapes
 }
 
-enum ShapeType { //Okay, I have to admit: It wasn't the best idea of mine to put (nearly) every Canvas item inside the Shape enum and struct...but I thought: "make it work first".
+enum ShapeType {
     case circle
     case ellipse
     case rectangle
     case roundedRectangle
     case text //For the text feature for now. But I think I have to fix it later.
-    // case triangle
-    //case image
+   // case triangle
 }
 
 struct ContentView: View {
@@ -77,7 +76,7 @@ struct ContentView: View {
     @State private var currentTool: Tools = .pencil
 
     @State private var showingAlert = false
-    //@State private var background = Image("Grid")
+    @State private var background = Image("Grid")
 
     @State private var lineWidthforEraser = 30.0
     @State private var checkEraserStatus: Bool = false
@@ -110,10 +109,11 @@ struct ContentView: View {
 
     // Added for image position state: MADE BY AI LOL (But why? It also worked with the other objects)
     @State private var loadedImagePosition = CGPoint(x: 120, y: 120)
+    @State private var imageBottle: [droppedImage] = []
     
     //FUNCTIONS:
     func render() -> URL {
-        let renderer = ImageRenderer(content: CanvasExportView(lines: lines, shapes: shapes))
+        let renderer = ImageRenderer(content: CanvasExportView(lines: lines, shapes: shapes, imageBottle: imageBottle))
         let url = URL.documentsDirectory.appending(path: "Freeplay-Export.pdf")
         renderer.render  { size, context in
             var box = CGRect(origin: .zero, size: size)
@@ -249,20 +249,34 @@ struct ContentView: View {
                         }
                     }
                     
-                    if isTheImageloaded == true { //So let's see, if the position in the code works out well...(Spoiler: yes it does but there is much work left.)
-                        if let loadedImage { 
-                            Image(nsImage: loadedImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 500, height: 700)
-                                .position(loadedImagePosition) // Use the state variable for position
-                                .gesture(DragGesture()
-                                    .onChanged { value in
-                                        loadedImagePosition = value.location // Update position
-                                    }
-                                )
-                        }
+//                    if isTheImageloaded == true { //So let's see, if the position in the code works out well...(Spoiler: yes it does but there is much work left.)
+//                        if let loadedImage {
+//                            Image(nsImage: loadedImage)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 500, height: 700)
+//                                .position(loadedImagePosition) // Use the state variable for position
+//                                .gesture(DragGesture()
+//                                    .onChanged { value in
+//                                        loadedImagePosition = value.location // Update position
+//                                    }
+//                                )
+//                        }
+//                    } |´s
+                    
+                    ForEach($imageBottle) { $img in
+                        Image(nsImage: img.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 500, height: 700)
+                            .position(img.position)
+                            .gesture(DragGesture()
+                                .onChanged { value in
+                                    img.position = value.location
+                                }
+                            )
                     }
+                    
                     
                 } //ZStack Ending
                 .frame(minWidth: 10000, minHeight: 10000)
@@ -280,16 +294,13 @@ struct ContentView: View {
                         } label: {
                             VStack{
                                 Image(systemName: "trash.fill")
-                                //Text("Clear Whiteboard")
-                                  //  .font(.callout)
                             }
                             .alert("Are you sure? This action cannot be undone.", isPresented: $showingAlert){
                                 Button("Cancel", role: .cancel) { }
-                                Button("Go ahead", role: .destructive) {  self.lines.removeAll(); self.shapes.removeAll()} //Something I am pretty proud of...
+                                Button("Go ahead", role: .destructive) {  self.lines.removeAll(); self.shapes.removeAll(); self.imageBottle.removeAll() } //Something I am pretty proud of...
                             }
                             
                         } .buttonStyle(.automatic)
-                          //  .padding(5)
                     }
 
                     
@@ -299,22 +310,11 @@ struct ContentView: View {
                         }) {
                             VStack{
                                 Image(systemName: "pencil.and.scribble")
-                                //Text("Pencil")
-                                  //  .font(.callout)
                             }
                         }            .buttonStyle(.automatic)
-                          //  .padding(5)
-                        
                             .popover(isPresented: $isPopover1Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 //Popover Draw
                                 VStack{
-                                    //    Text("Adjust Color") removed it for now to make more space inside of the popover
-                                    //  .fontWeight(.bold)
-                                    //   .font(.headline)
-                                    //.font(.system(size: 12, weight: .medium))
-                                    //.padding(5)
-                                    // .padding(.top, 5)
-                                    
                                     HStack{
                                         if colorScheme == .light{
                                             Button{
@@ -601,30 +601,14 @@ struct ContentView: View {
                     }
                     
                     //Popover 2 beginning
-                    
-                    //                ToolbarItem(placement: .principal) {
-                    //                    Button(){
-                    //                        self.isPopover2Presented.toggle()
-                    //                    } label: {
-                    //                        VStack{
-                    //                            Image(systemName: "capsule.on.rectangle.fill")
-                    //                            Text("Shape")
-                    //                                .font(.callout)
-                    //                        }
-                    //                        }.buttonStyle(.borderless)
-                    //                    }
                     ToolbarItem(placement: .principal) {
                         Button(action: {
                             isPopover2Presented.toggle()
                         }) {
                             VStack{
                                 Image(systemName: "capsule.on.rectangle.fill")
-                              //  Text("Shape")
-                                //    .font(.callout)
                             }
                         }            .buttonStyle(.automatic)
-                          //  .padding(5)
-                        
                             .popover(isPresented: $isPopover2Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 
                                 VStack {
@@ -633,7 +617,7 @@ struct ContentView: View {
                                             .padding(20)
                                             .scaledToFit()
                                             .draggable("circle")
-                                        Ellipse() //Have to fix padding and alignmnt of preview shapes...
+                                        Ellipse()
                                             .padding(.top, 50)
                                             .padding(.bottom, 30)
                                             .padding(.horizontal, 30)
@@ -651,37 +635,9 @@ struct ContentView: View {
                                             .draggable("rounded rectangle")
                                     }
                                     
-                                    //                                    VStack{
-                                    //                                        HStack{
-                                    //                                            Button{
-                                    //                                                self.currentShape.color = .black
-                                    //                                            } label: {
-                                    //                                                Text("")
-                                    //                                                    .font(.headline)
-                                    //                                                    .fontWeight(.semibold)
-                                    //                                                    .padding(.vertical, 12)
-                                    //                                                    .padding(.horizontal, 12)
-                                    //                                                    .background(
-                                    //                                                        Circle()
-                                    //                                                            .fill(Color.black)
-                                    //                                                    )
-                                    //                                                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
-                                    //                                            }
-                                    //                                            .buttonStyle(.plain)
-                                    //                                            .overlay(
-                                    //                                                self.currentShape.color == .black ? Circle().stroke(Color.blue, lineWidth: 3)
-                                    //                                                : nil
-                                    //                                            )
-                                    //
-                                    //                                        }
-                                    //                                    } UNDER CONSTRUCTION!
-                                    
                                 } .frame(width: 300, height: 300)
                             }
                     } //Toolbar element (item) shapes collection preview ending...
-                    
-                    
-                    
                     
                     ToolbarItem(placement: .principal){
                         Button(action: {
@@ -689,38 +645,29 @@ struct ContentView: View {
                         }) {
                             VStack{
                                 Image(systemName: "character.cursor.ibeam")
-                                //Text("Text")
-                                  //  .font(.callout)
                             }
                         } .buttonStyle(.automatic)
-                           // .padding(5)
-                        
                             .popover(isPresented: $isPopover3Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom) {
                                 VStack{
                                     
                                     TextField("Enter your text here...", text: $textsoncanvas)
                                         .padding(20)
-                                    //  .padding(.bottom, 240)
-                                    
-                                    //                                    RoundedRectangle(cornerRadius: 20)
-                                    //                                        .fill(Color.white)
-                                    //                                        .padding(20)
                                     
                                     Slider(value: $fontSizeonCanvas, in: 10.0...50.0, step: 1.0)
                                         .padding(.horizontal, 10)
                                     Text("Font size: \(fontSizeonCanvas)")
                                     
                                     if colorScheme == .light {
-                                        Text(self.textsoncanvas) //Fix it for Darkmode!!! (I will do it now. '02.10.2025, 22:05, 10:05pm')
-                                            .fixedSize(horizontal: false, vertical: true) //This feature works the best for short sentences or phrases or single words. (I have to create some kind of invisible border sometime!)
+                                        Text(self.textsoncanvas)
+                                            .fixedSize(horizontal: false, vertical: true)
                                             .multilineTextAlignment(.center)
                                             .padding()
                                             .frame(width: 270, height: 170)
                                             .background(Rectangle().fill(Color.white).shadow(radius: 4).cornerRadius(20))
                                             .draggable("droptext")
                                     } else {
-                                        Text(self.textsoncanvas) //Fix it for Darkmode!!! (I will do it now. '02.10.2025, 22:05, 10:05pm')
-                                            .fixedSize(horizontal: false, vertical: true) //This feature works the best for short sentences or phrases or single words. (I have to create some kind of invisible border sometime!)
+                                        Text(self.textsoncanvas)
+                                            .fixedSize(horizontal: false, vertical: true)
                                             .multilineTextAlignment(.center)
                                             .padding()
                                             .frame(width: 270, height: 170)
@@ -728,9 +675,8 @@ struct ContentView: View {
                                             .draggable("droptext")
                                     }
                                     
-                                    
                                 } .frame(width: 300, height:300)
-                            } //Popover 3 end bracket
+                            }
                         
                     }
                     
@@ -746,7 +692,6 @@ struct ContentView: View {
                             .popover(isPresented: $isPopover4Presented, attachmentAnchor: .rect(.bounds), arrowEdge: .bottom){
                                 VStack{
                                     Button(action: { presentImporter = true }) {
-                                        
                                         Text("Browse your images...")
                                             .foregroundStyle(Color.white)
                                             .font(.headline)
@@ -760,35 +705,31 @@ struct ContentView: View {
                                             )
                                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
                                         
-                                    }.fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in //Got this code from: https://stackoverflow.com/questions/68885275/how-can-i-grab-a-pdf-file-from-the-files-app-in-swiftui-and-import-it-into-my-ap
+                                    }
+                                    // *** Hier ist die Änderung! *** (XCODE AI)
+                                    .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in
                                         switch result {
                                         case .success(let url):
-                                            
+                                            print(url)
                                             if url.startAccessingSecurityScopedResource() {
-                                                if let image = NSImage(contentsOf: url){
-                                                    loadedImage = image //Apple Intelligence helped me.
+                                                if let image = NSImage(contentsOf: url) {
+                                                    loadedImage = image
                                                     isTheImageloaded = true
-                                                    loadedImagePosition = CGPoint(x: 120, y: 120) // Reset position on new image load
+                                                    self.imageBottle.append(droppedImage(image: image))
                                                 }
                                                 url.stopAccessingSecurityScopedResource()
                                             }
-                                            
-                                            print(url)
-                                            //print("Test-11")
-                                            //use url.startAccessingSecurityScopedResource() if you are going to read the data
                                         case .failure(let error):
-                                            print("Error while loading image:", error)
-                                            isTheImageloaded = false
+                                            print(error)
                                         }
-                                    }.buttonStyle(.borderless)
-
+                                    }
+                                    .buttonStyle(.borderless)
                                 }.frame(width: 250, height: 70)
                             }
                     }
                     
                     
-                }.frame(width: 10000, height: 10000) //.toolbar ending bracet
-                
+                }.frame(width: 10000, height: 10000)
             }
         }
  }
@@ -801,6 +742,9 @@ struct ContentView: View {
         struct CanvasExportView: View {  //AI helped me here...
             var lines: [Line]
             var shapes: [Shape]
+            var imageBottle: [droppedImage]
+            
+            //@State private var imageBottle: [droppedImage] = []
             
             var body: some View { //Every element(s) out of the Canvas had to get exported.
                 ZStack {
@@ -838,6 +782,14 @@ struct ContentView: View {
                                 .font(.system(size: shape.fontSize, weight: .medium, design: .rounded))
                                 .position(shape.position)
                         }
+                    }
+                    
+                    ForEach(imageBottle) { img in
+                        Image(nsImage: img.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 500, height: 700)
+                            .position(img.position)
                     }
                 }
                 .frame(width: 10000, height: 10000)
