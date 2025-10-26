@@ -16,15 +16,13 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Clear whiteboard feature
 - Export your canvas
 - Drop Pictures onto the canvas
+- AI Sidebar on Canvas
 
 ## Coming soon...
 
 - Perfomance improvements
-- Features for color customization of the Shapes and Text
+- Features for color customization of the Shapes and Text (Text Fonts)
 - Minor bugfixes
-- Design improvements (Probably a few more gradients or so)
-- Sidebar
-- AI
 
 ## Installation
 
