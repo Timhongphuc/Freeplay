@@ -125,7 +125,7 @@ struct ContentView: View {
         }
         return url
     }
-    
+
     var body: some View {
         ScrollView([.horizontal, .vertical]){
                 ZStack {
@@ -137,13 +137,18 @@ struct ContentView: View {
                             path.addLines(line.points)
                             context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
                         }
+                        if !currentLine.points.isEmpty { //AI (Performance improvement)
+                            var path = Path()
+                            path.addLines(currentLine.points)
+                            context.stroke(path, with: .color(currentLine.color), lineWidth: currentLine.lineWidth)
+                        }
                         
                     }.gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
                               
                         .onChanged({value in
                             let newPoint = value.location //Location inside the Window/Canvas
                             currentLine.points.append(newPoint)
-                            self.lines.append(currentLine)
+                            //self.lines.append(currentLine)
                             currentLine.lineWidth = self.value
                             currentLine.color = self.currentColor
                             
@@ -270,6 +275,7 @@ struct ContentView: View {
                             .scaledToFit()
                             .frame(width: 500, height: 700)
                             .position(img.position)
+                            .shadow(radius: 10)
                             .gesture(DragGesture()
                                 .onChanged { value in
                                     img.position = value.location

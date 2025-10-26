@@ -25,7 +25,7 @@ struct WelcomeScreenView: View {
             
             HStack{
                 NavigationLink{
-                    ContentView()
+                    AI_Sidebar()
                 } label: {
                     Text("+ Start creating")
                         .font(.system(size: 12, weight: .semibold))

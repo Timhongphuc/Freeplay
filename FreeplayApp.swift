@@ -11,7 +11,11 @@ import SwiftUI
 struct FreeplayApp: App {
     var body: some Scene {
         WindowGroup {
-            WelcomeScreenView()
+            if #available(macOS 26.0, *) {
+                WelcomeScreenView()
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }
