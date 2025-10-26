@@ -49,6 +49,9 @@ Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://gith
 ### Main Screen:
 <img width="921" height="604" alt="Bildschirmfoto 2025-10-18 um 15 02 02" src="https://github.com/user-attachments/assets/c13d2252-ff33-4053-ae27-614ec79af5f8" />
 
+### AI-Sidebar + Freeplay Canvas
+<img width="1209" height="824" alt="Bildschirmfoto 2025-10-26 um 22 15 44" src="https://github.com/user-attachments/assets/7f965e4d-4db1-4e92-89eb-3e1e5991ac51" />
+
 ## Project information
 
 - Duration of the Project (Beginnging - End): 21. August 2025 - Now. 
