@@ -23,6 +23,7 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Perfomance improvements
 - Features for color customization of the Shapes and Text (Text Fonts)
 - Minor bugfixes
+- Markdown Support for AI
 
 ## Installation
 
