@@ -14,13 +14,13 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Drop shapes
 - Add text to the canvas with drag and drop + Size customization of the droppable text
 - Clear whiteboard feature
-- Export your canvas 
+- Export your canvas
+- Drop Pictures onto the canvas
 
 ## Coming soon...
 
 - Perfomance improvements
 - Features for color customization of the Shapes and Text
-- Drop Pictures onto the canvas
 - Minor bugfixes
 - Design improvements (Probably a few more gradients or so)
 - Sidebar
