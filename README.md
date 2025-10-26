@@ -54,7 +54,7 @@ Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://gith
 
 ## Project information
 
-- Duration of the Project (Beginnging - End): 21. August 2025 - Now. 
+- Duration of the Project (Beginnging - End): 21. August 2025 - 26. October 2025
 - Sticky notes used: ≈ 26
 - Hours I spend building this Project: ≈ 60h (or even more idk.)
 
