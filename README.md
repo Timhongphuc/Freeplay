@@ -50,7 +50,10 @@ Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://gith
 <img width="921" height="604" alt="Bildschirmfoto 2025-10-18 um 15 02 02" src="https://github.com/user-attachments/assets/c13d2252-ff33-4053-ae27-614ec79af5f8" />
 
 ### AI-Sidebar + Freeplay Canvas
-[Dark Mode](https://github.com/user-attachments/assets/7f965e4d-4db1-4e92-89eb-3e1e5991ac51) | [Light Mode](https://github.com/user-attachments/assets/ccdc5435-af46-4493-8338-5f5f97013627)
+
+| Dark Mode | Light Mode |
+| --------- | ---------- |
+| ![Dark Mode](https://github.com/user-attachments/assets/7f965e4d-4db1-4e92-89eb-3e1e5991ac51) | ![Light Mode](https://github.com/user-attachments/assets/ccdc5435-af46-4493-8338-5f5f97013627) |
 
 ## Project information
 
