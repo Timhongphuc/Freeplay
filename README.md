@@ -16,7 +16,7 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Clear whiteboard feature
 - Export your canvas
 - Drop Pictures onto the canvas
-- AI Sidebar on Canvas
+- AI Sidebar on Canvas (Requires macOS Tahoe 26 or higher)
 
 ## Coming soon...
 
@@ -25,6 +25,13 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Minor bugfixes
 - Markdown Support for AI
 - Design inprovements for the AI Button
+
+## Tech-Stack
+
+MacOS: Swift + SwiftUI and AppKit
+AI-Assistant: Foundation Model Framework (Apple Inc.) -> Offline, Private, Secure
+Storage: ShareLink + ImageRenderer
+Accessing files: fileImporter + FileProviderUI
 
 ## Installation
 
