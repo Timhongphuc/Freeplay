@@ -28,10 +28,10 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 
 ## Tech-Stack
 
-MacOS: Swift + SwiftUI and AppKit
-AI-Assistant: Foundation Model Framework (Apple Inc.) -> Offline, Private, Secure
-Storage: ShareLink + ImageRenderer
-Accessing files: fileImporter + FileProviderUI
+- MacOS: Swift + SwiftUI and AppKit
+- AI-Assistant: Foundation Model Framework (Apple Inc.) -> Offline, Private, Secure
+- Storage: ShareLink + ImageRenderer
+- Accessing files: fileImporter + FileProviderUI
 
 ## Installation
 
