@@ -8,7 +8,7 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 
 </div>
 
-## Features
+## Features 👀
 
 - Draw in different colors and thicknesses
 - Drop shapes
@@ -18,7 +18,7 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Drop Pictures onto the canvas
 - AI Sidebar on Canvas (Requires macOS Tahoe 26 or higher)
 
-## Coming soon...
+## Coming soon... 🔜
 
 - Perfomance improvements
 - Features for color customization of the Shapes and Text (Text Fonts)
@@ -26,14 +26,14 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Markdown Support for AI
 - Design inprovements for the AI Button
 
-## Tech-Stack
+## Tech-Stack 📚
 
-- MacOS: Swift + SwiftUI and AppKit
-- AI-Assistant: Foundation Model Framework (Apple Inc.) -> Offline, Private, Secure
-- Storage: ShareLink + ImageRenderer
-- Accessing files: fileImporter + FileProviderUI
+- 💻 MacOS: Swift + SwiftUI and AppKit
+- ✨ AI-Assistant: Foundation Model Framework (Apple Inc.) -> Offline, Private, Secure
+- 💾 Storage: ShareLink + ImageRenderer
+- 🗂️ Accessing files: fileImporter + FileProviderUI
 
-## Installation
+## Installation ⬇️
 
 There are two diffrent ways of installing Freeplay: 
 ### Method 1: 
@@ -48,7 +48,7 @@ cd Freeplay
 
 Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://github.com/Timhongphuc/Freeplay/tags) 
 
-## Screenshots
+## Screenshots 📸
 
 ### Welcome Screen:
 <img width="1228" height="773" alt="Bildschirmfoto 2025-09-27 um 12 08 32" src="https://github.com/user-attachments/assets/57141e8f-d568-4da8-853c-b2fdbb017e43" />
@@ -62,7 +62,7 @@ Install the DMG (Disk Image) from the releases: [Freeplay Releases](https://gith
 | --------- | ---------- |
 | ![Dark Mode](https://github.com/user-attachments/assets/7f965e4d-4db1-4e92-89eb-3e1e5991ac51) | ![Light Mode](https://github.com/user-attachments/assets/ccdc5435-af46-4493-8338-5f5f97013627) |
 
-## Project information
+## Project information ℹ️
 
 - Duration of the Project (Beginnging - End): 21. August 2025 - 26. October 2025
 - Sticky notes used: ≈ 26
