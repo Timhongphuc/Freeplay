@@ -15,8 +15,9 @@ Freeplay, the open source and (nearly) infinite whiteboard. A place to draw, pla
 - Add text to the canvas with drag and drop + Size customization of the droppable text
 - Clear whiteboard feature
 - Export your canvas
-- Drop Pictures onto the canvas
+- Import Images
 - AI Sidebar on Canvas (Requires macOS Tahoe 26 or higher)
+- Import PDF (First page only)
 
 ## Coming soon... 🔜
 
