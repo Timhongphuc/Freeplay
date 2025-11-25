@@ -713,7 +713,7 @@ struct ContentView: View {
                                         
                                     }
                                     // *** Hier ist die Änderung! *** (XCODE AI)
-                                    .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg]) { result in
+                                    .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.png, .jpeg, .pdf]) { result in
                                         switch result {
                                         case .success(let url):
                                             print(url)
